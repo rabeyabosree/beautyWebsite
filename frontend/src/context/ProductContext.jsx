@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-// ✅ Create Context
+//  Create Context
 export const ProductContext = createContext();
+const API_URL = import.meta.BACKEND_URL
 
 function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
@@ -10,11 +11,11 @@ function ProductProvider({ children }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
 
-  // ✅ Fetch products only once
+  //  Fetch products only once
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/products");
+        const res = await axios.get(`${API_URL}/api/products`);
         setProducts(res.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -23,11 +24,13 @@ function ProductProvider({ children }) {
     fetchProducts();
   }, []);
 
-   // ✅ Fetch products for admin
+
+
+  //  Fetch products for admin
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/products/admin");
+        const res = await axios.get(`${API_URL}/api/products/admin`);
         setAdminProducts(res.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -36,23 +39,23 @@ function ProductProvider({ children }) {
     fetchProducts();
   }, []);
 
-  // ✅ Get unique categories
+  //  Get unique categories
   const categories = ["All", ...new Set(products.map((item) => item.category))];
 
-  // ✅ Filter products by selected category
+  //  Filter products by selected category
   const filteredProducts =
     selectedCategory === "All"
       ? products
       : products.filter((item) => item.category === selectedCategory);
 
-  // ✅ Context Value
+  //  Context Value
   const value = {
     products,
     categories,
     selectedCategory,
     setSelectedCategory,
     filteredProducts,
-    adminProducts ,
+    adminProducts,
     setAdminProducts,
     setProducts
   };
