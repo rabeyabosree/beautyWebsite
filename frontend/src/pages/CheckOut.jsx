@@ -24,6 +24,7 @@ function CheckOut() {
     else if (locationType === "outside") setShippingFee(120);
     else setShippingFee(0);
   }, [locationType]);
+  const API_URL = import.meta.env.VITE_BACKEND_URL
 
   const handleChange = (e) => {
     setShippingAddress({ ...shippingAddress, [e.target.name]: e.target.value });
@@ -57,8 +58,8 @@ function CheckOut() {
     };
 
     try {
-      
-      await axios.post("http://localhost:8000/api/orders", orderData);
+
+      await axios.post(`${API_URL}/api/orders`, orderData);
       alert("Order placed successfully!");
       clearCart();
       navigate("/orders");

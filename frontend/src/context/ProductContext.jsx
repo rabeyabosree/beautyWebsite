@@ -3,12 +3,15 @@ import axios from "axios";
 
 //  Create Context
 export const ProductContext = createContext();
-const API_URL = import.meta.BACKEND_URL
+const API_URL = import.meta.env.VITE_BACKEND_URL
+
 
 function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [adminProducts, setAdminProducts] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  console.log(products)
 
 
   //  Fetch products only once

@@ -15,6 +15,8 @@ function AddProduct() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  const API_URL = import.meta.env.VITE_BACKEND_URL
+
   // handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +41,7 @@ function AddProduct() {
       });
       images.forEach((img) => data.append("images", img));
 
-      const res = await axios.post("http://localhost:8000/api/products", data, {
+      const res = await axios.post(`${API_URL}/api/products`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

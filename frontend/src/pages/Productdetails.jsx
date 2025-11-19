@@ -11,11 +11,12 @@ function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
   const { addToCart, updateQty, cartItems } = useContext(CartContext);
+  const API_URL = import.meta.env.VITE_BACKEND_URL
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/products/${id}`);
+        const res = await axios.get(`${API_URL}/api/products/${id}`);
         setProduct(res.data);
         setMainImage(res.data.images[0]);
 

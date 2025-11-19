@@ -8,11 +8,12 @@ function AdminDashboard() {
     const [activeTab, setActiveTab] = useState("add");
     const { adminProducts, setAdminProducts, setProducts } = useContext(ProductContext);
     const [searchTerm, setSearchTerm] = useState("");
+     const API_URL = import.meta.env.VITE_BACKEND_URL
 
     const handleDelete = async (id) => {
         try {
             // Call backend API to delete product
-            await axios.delete(`http://localhost:8000/api/products/${id}`);
+            await axios.delete(`${API_URL}/api/products/${id}`);
 
             // Update frontend state
             setProducts((prev) => prev.filter((p) => p._id !== id));
