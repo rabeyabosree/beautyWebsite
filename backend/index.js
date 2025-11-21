@@ -7,23 +7,26 @@ const app = express()
 const PORT = process.env.PORT
 
 // cors
+
+// Allow both localhost + production frontend
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.BASE_URL
+  process.env.BASE_URL // This must be set in Render env
 ];
-
 
 app.use(cors({
   origin: function(origin, callback) {
-    if(!origin || allowedOrigins.includes(origin)) {
+    if(!origin || allowedOrigins.includes(origin)){
       callback(null, true);
     } else {
+      console.log("Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true
 }));
 
+console.log("CORS allowed origins:", allowedOrigins);
 
 
 
