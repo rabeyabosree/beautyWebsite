@@ -9,22 +9,24 @@ const PORT = process.env.PORT
 // cors
 
 // Allow both localhost + production frontend
+// index.js / backend
 const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.BASE_URL // This must be set in Render env
+  'http://localhost:5173',
+  'https://beauty-website-rho.vercel.app' // production frontend
 ];
 
 app.use(cors({
-  origin: function(origin, callback) {
-    if(!origin || allowedOrigins.includes(origin)){
-      callback(null, true);
-    } else {
-      console.log("Blocked by CORS:", origin);
-      callback(new Error("Not allowed by CORS"));
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true); // mobile apps / curl / server-to-server
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
     }
+    return callback(null, true);
   },
   credentials: true
 }));
+
 
 console.log("CORS allowed origins:", allowedOrigins);
 
