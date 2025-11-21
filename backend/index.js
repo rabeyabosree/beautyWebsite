@@ -13,6 +13,9 @@ app.use(cors(
         credentials: true
     }
 ))
+console.log(process.env.BASE_URL)
+
+
 
 // json and formdat data middleware
 app.use(express.json())
